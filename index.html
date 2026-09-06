@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enjoy Learning English | مدونة تعلم الإنجليزية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Tajawal:wght@300;400;500;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0f0d;
+            --bg-secondary: #111916;
+            --fg: #f4f7f5;
+            --muted: #8b9a90;
+            --accent: #00d47e;
+            --accent-glow: rgba(0, 212, 126, 0.3);
+            --card: rgba(17, 25, 22, 0.8);
+            --border: rgba(139, 154, 144, 0.2);
+            --warm: #ffd93d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-tech {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+            background-image: 
+                radial-gradient(circle at 20% 20%, var(--accent-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 217, 61, 0.1) 0%, transparent 50%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.15;
+        }
+
+        /* Floating Elements */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 30px) rotate(3deg); }
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--warm));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Cards */
+        .blog-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, var(--accent) 100%);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px -20px var(--accent-glow);
+        }
+
+        .blog-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-image {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .blog-card:hover .card-image img {
+            transform: scale(1.15);
+        }
+
+        .category-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .category-grammar { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+        .category-vocabulary { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+        .category-speaking { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .category-listening { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .category-writing { background: rgba(6, 182, 212, 0.2); color: #22d3ee; }
+        .category-tips { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #00b368);
+            color: var(--bg);
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px -10px var(--accent-glow);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--fg);
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 212, 126, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--fg) 0%, var(--muted) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            color: var(--muted);
+            max-width: 600px;
+        }
+
+        /* Stats */
+        .stat-item {
+            text-align: center;
+            padding: 24px;
+            border-radius: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        /* Search Box */
+        .search-box {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 8px 8px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--fg);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .search-box input::placeholder {
+            color: var(--muted);
+        }
+
+        /* Category Pills */
+        .category-pill {
+            padding: 10px 24px;
+            border-radius: 50px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .category-pill:hover,
+        .category-pill.active {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(0, 212, 126, 0.1), rgba(255, 217, 61, 0.05));
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            filter: blur(60px);
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            z-index: 1000;
+            padding: 80px 32px 32px;
+            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 1px solid var(--border);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: var(--fg);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+        }
+
+        /* Featured Post */
+        .featured-post {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 1024px) {
+            .featured-post {
+                grid-column: span 1;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Focus States */
+        *:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Reading Progress */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--warm));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Tag Cloud */
+        .tag-cloud a {
+            display: inline-block;
+            padding: 6px 16px;
+            margin: 4px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .tag-cloud a:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Reading Progress -->
+    <div class="reading-progress" id="progress"></div>
+
+    <!-- Background Effects -->
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Floating Shapes -->
+    <div class="floating-shape" style="width: 400px; height: 400px; background: var(--accent-glow); top: 10%; left: -10%;"></div>
+    <div class="floating-shape" style="width: 300px; height: 300px; background: rgba(255, 217, 61, 0.15); bottom: 20%; right: -5%; animation-delay: -5s;"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <ul class="space-y-6">
+            <li><a href="#home" class="text-xl font-semibold hover:text-[var(--accent)] transition-colors">الرئيسية</a></li>
+            <li><a href="#articles" class="text-xl font-semibold hover:text-[var(--accent)] transition-colors">المقالات</a></li>
+            <li><a href="#categories" class="text-xl font-semibold hover:text-[var(--accent)] transition-colors">الفئات</a></li>
+            <li><a href="#about" class="text-xl font-semibold hover:text-[var(--accent)] transition-colors">عن القناة</a></li>
+            <li><a href="#contact" class="text-xl font-semibold hover:text-[var(--accent)] transition-colors">تواصل معنا</a></li>
+        </ul>
+        <button class="btn-primary w-full mt-8">اشترك في القناة</button>
+    </nav>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[var(--bg)]/70 border-b border-[var(--border)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-18 py-4">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[var(--accent)] to-emerald-600 flex items-center justify-center shadow-lg shadow-[var(--accent-glow)] group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-display font-bold text-lg leading-tight block">Enjoy Learning</span>
+                        <span class="text-xs text-[var(--accent)] font-medium tracking-wide">ENGLISH</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="desktop-nav hidden md:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-sm font-medium">الرئيسية</a>
+                    <a href="#articles" class="nav-link text-sm font-medium">المقالات</a>
+                    <a href="#categories" class="nav-link text-sm font-medium">الفئات</a>
+                    <a href="#about" class="nav-link text-sm font-medium">عن القناة</a>
+                    <a href="#contact" class="nav-link text-sm font-medium">تواصل</a>
+                </nav>
+
+                <!-- CTA & Hamburger -->
+                <div class="flex items-center gap-4">
+                    <a href="https://youtube.com" target="_blank" class="hidden sm:flex btn-primary text-sm items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        اشترك الآن
+                    </a>
+                    
+                    <div class="hamburger" id="hamburger" aria-label="فتح القائمة">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <!-- Text Content -->
+                    <div class="space-y-8 reveal">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--card)] border border-[var(--border)] text-sm">
+                            <span class="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse"></span>
+                            <span>أكثر من 50,000 متعلم معنا</span>
+                        </div>
+                        
+                        <h1 class="hero-title font-display">
+                            تعلم الإنجليزية<br>
+                            <span class="text-[var(--accent)]">بشكل ممتع</span> ومبتكر
+                        </h1>
+                        
+                        <p class="hero-subtitle">
+                            مرحباً بك في مدونة Enjoy Learning English! هنا تجد دروساً مجانية ونصائح عملية 
+                            لتطوير مهاراتك في اللغة الإنجليزية من الصفر حتى الاحتراف.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#articles" class="btn-primary text-base">
+                                ابدأ التعلم الآن
+                                <svg class="w-5 h-5 inline-block mr-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                            <a href="#about" class="btn-secondary text-base">اعرف المزيد</a>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="grid grid-cols-3 gap-4 pt-8">
+                            <div class="stat-item reveal delay-1">
+                                <div class="stat-number font-tech">150+</div>
+                                <div class="text-sm text-[var(--muted)] mt-1">درس مجاني</div>
+                            </div>
+                            <div class="stat-item reveal delay-2">
+                                <div class="stat-number font-tech">50K+</div>
+                                <div class="text-sm text-[var(--muted)] mt-1">متابع نشط</div>
+                            </div>
+                            <div class="stat-item reveal delay-3">
+                                <div class="stat-number font-tech">4.9</div>
+                                <div class="text-sm text-[var(--muted)] mt-1">تقييم القناة</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Element -->
+                    <div class="relative reveal delay-2">
+                        <div class="relative w-full aspect-square max-w-lg mx-auto">
+                            <!-- Main Circle -->
+                            <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--accent)]/20 to-transparent border border-[var(--accent)]/30 animate-pulse-slow"></div>
+                            
+                            <!-- Content Cards Floating -->
+                            <div class="absolute top-8 right-4 bg-[var(--card)] backdrop-blur-xl p-4 rounded-2xl border border-[var(--border)] shadow-2xl hover:scale-105 transition-transform cursor-pointer" style="animation: float 6s ease-in-out infinite;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Grammar</div>
+                                        <div class="text-xs text-[var(--muted)]">قواعد اللغة</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-12 left-0 bg-[var(--card)] backdrop-blur-xl p-4 rounded-2xl border border-[var(--border)] shadow-2xl hover:scale-105 transition-transform cursor-pointer" style="animation: float 8s ease-in-out infinite reverse;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Vocabulary</div>
+                                        <div class="text-xs text-[var(--muted)]">المفردات</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-24 right-8 bg-[var(--card)] backdrop-blur-xl p-4 rounded-2xl border border-[var(--border)] shadow-2xl hover:scale-105 transition-transform cursor-pointer" style="animation: float 7s ease-in-out infinite 1s;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Speaking</div>
+                                        <div class="text-xs text-[var(--muted)]">التحدث</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Center Icon -->
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-gradient-to-br from-[var(--accent)] to-emerald-600 flex items-center justify-center shadow-2xl shadow-[var(--accent-glow)]">
+                                <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section id="articles" class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="inline-block px-4 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-sm font-semibold mb-4">أحدث المقالات</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">دروس و مقالات حصرية</h2>
+                    <p class="text-[var(--muted)] max-w-2xl mx-auto">اكتشف مجموعة واسعة من الدروس المصممة بعناية لمساعدتك على تحسين مهاراتك في اللغة الإنجليزية</p>
+                </div>
+
+                <!-- Search & Filter -->
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12 reveal">
+                    <div class="search-box">
+                        <svg class="w-5 h-5 text-[var(--muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="ابحث عن درس أو موضوع..." id="searchInput" aria-label="البحث في المقالات">
+                    </div>
+
+                    <div id="categories" class="flex gap-3 overflow-x-auto pb-2 w-full md:w-auto justify-center md:justify-end">
+                        <button class="category-pill active" data-category="all">الكل</button>
+                        <button class="category-pill" data-category="grammar">قواعد</button>
+                        <button class="category-pill" data-category="vocabulary">مفردات</button>
+                        <button class="category-pill" data-category="speaking">تحدث</button>
+                        <button class="category-pill" data-category="listening">استماع</button>
+                        <button class="category-pill" data-category="writing">كتابة</button>
+                    </div>
+                </div>
+
+                <!-- Blog Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
+                    <!-- Articles will be rendered by JavaScript -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-12 reveal">
+                    <button class="btn-secondary" id="loadMoreBtn">
+                        عرض المزيد من المقالات
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Video Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--bg-secondary)]/50">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="reveal">
+                        <span class="inline-block px-4 py-1 rounded-full bg-[var(--warm)]/10 text-[var(--warm)] text-sm font-semibold mb-4">فيديو مميز</span>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">شاهد أحدث فيديو على القناة</h2>
+                        <p class="text-[var(--muted)] mb-8 text-lg">انضم إلى آلاف المتابعين واستمتع بمحتوى تعليمي ممتاز يساعدك على تحسين مستواك في الإنجليزية يومياً.</p>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-[var(--accent)]/20 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <span>دروس يومية مجانية</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-[var(--accent)]/20 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <span>محتوى منظم للمستويات جميعها</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-[var(--accent)]/20 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <span>تفاعل مباشر مع المشاهدين</span>
+                            </li>
+                        </ul>
+
+                        <a href="https://youtube.com" target="_blank" class="btn-primary inline-flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                            زيارة القناة على يوتيوب
+                        </a>
+                    </div>
+
+                    <div class="reveal delay-2">
+                        <div class="relative aspect-video rounded-3xl overflow-hidden bg-[var(--card)] border border-[var(--border)] shadow-2xl group cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=450&fit=crop" alt="Video Thumbnail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Play Button Overlay -->
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition-colors">
+                                <div class="w-20 h-20 rounded-full bg-[var(--accent)] flex items-center justify-center shadow-2xl shadow-[var(--accent-glow)] group-hover:scale-110 transition-transform">
+                                    <svg class="w-8 h-8 text-white mr-[-4px]" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Video Info Badge -->
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                                <div class="bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+                                    <span class="text-[var(--accent)] font-bold">12:45</span>
+                                    <span class="text-white/70 mr-2">مشاهدة</span>
+                                </div>
+                                <div class="bg-red-600 px-3 py-1 rounded-full text-xs font-bold">
+                                    جديد
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="order-2 lg:order-1 reveal">
+                        <div class="relative">
+                            <div class="absolute -top-6 -right-6 w-full h-full bg-gradient-to-br from-[var(--accent)]/20 to-transparent rounded-3xl"></div>
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=500&fit=crop" alt="Learning Together" class="relative rounded-3xl shadow-2xl w-full">
+                            
+                            <!-- Floating Card -->
+                            <div class="absolute -bottom-6 -left-6 bg-[var(--card)] backdrop-blur-xl p-6 rounded-2xl border border-[var(--border)] shadow-xl max-w-[200px]">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent)] to-emerald-600 flex items-center justify-center text-white font-bold text-lg">E</div>
+                                    <div>
+                                        <div class="font-bold">Enjoy Learning</div>
+                                        <div class="text-xs text-[var(--muted)]">@enjoyenglish</div>
+                                    </div>
+                                </div>
+                                <div class="text-2xl font-bold text-[var(--accent)]">50K+</div>
+                                <div class="text-sm text-[var(--muted)]">متابع</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-1 lg:order-2 reveal delay-2">
+                        <span class="inline-block px-4 py-1 rounded-full bg-purple-500/10 text-purple-400 text-sm font-semibold mb-4">عن القناة</span>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">رحلتنا في تعليم الإنجليزية</h2>
+                        <p class="text-[var(--muted)] mb-6 text-lg leading-relaxed">
+                            بدأت قناة <strong class="text-[var(--fg)]">Enjoy Learning English</strong> بهدف واحد: جعل تعلم اللغة الإنجليزية متاحاً للجميع وبأسلوب ممتع وسهل.
+                        </p>
+                        <p class="text-[var(--muted)] mb-8 leading-relaxed">
+                            نؤمن بأن كل شخص يستطيع إتقان الإنجليزية إذا توفرت له الأدوات والطرق الصحيحة. ومن هنا، نقدم محتوى تعليمي مجاني وعالي الجودة يناسب جميع المستويات.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                                <div class="text-3xl font-bold text-[var(--accent)] mb-1">3+</div>
+                                <div class="text-sm text-[var(--muted)]">سنوات خبرة</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                                <div class="text-3xl font-bold text-[var(--warm)] mb-1">500+</div>
+                                <div class="text-sm text-[var(--muted)]">فيديو تعليمي</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                                <div class="text-3xl font-bold text-pink-400 mb-1">1M+</div>
+                                <div class="text-sm text-[var(--muted)]">مشاهدة إجمالية</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                                <div class="text-3xl font-bold text-cyan-400 mb-1">100%</div>
+                                <div class="text-sm text-[var(--muted)]">محتوى مجاني</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topics / Tags Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--bg-secondary)]/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">مواضيع شائعة</h2>
+                    <p class="text-[var(--muted)]">استكشف المواضيع التي يهتم بها المتعلمون</p>
+                </div>
+
+                <div class="tag-cloud text-center reveal delay-1" id="tagCloud">
+                    <!-- Tags will be rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="newsletter-section p-8 md:p-16 text-center relative reveal">
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[var(--accent)] to-emerald-600 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">ابقَ على اطلاع دائم</h2>
+                        <p class="text-[var(--muted)] mb-8 max-w-lg mx-auto">اشترك في نشرتنا البريدية لتصلك أحدث الدروس والنصائح مباشرة في بريدك الإلكتروني</p>
+
+                        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" onsubmit="handleSubscribe(event)">
+                            <input type="email" placeholder="بريدك الإلكتروني" required class="flex-1 px-6 py-4 rounded-full bg-[var(--bg)] border border-[var(--border)] text-[var(--fg)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-glow)] transition-all" aria-label="البريد الإلكتروني">
+                            <button type="submit" class="btn-primary whitespace-nowrap">اشترك الآن</button>
+                        </form>
+
+                        <p class="text-sm text-[var(--muted)] mt-4">نحترم خصوصيتك - لن نشارك بريدك مع أي طرف ثالث</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-[var(--border)] py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+                    <a href="#" class="flex items-center gap-3 mb-6">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[var(--accent)] to-emerald-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="font-display font-bold text-lg block">Enjoy Learning</span>
+                            <span class="text-xs text-[var(--accent)]">ENGLISH</span>
+                        </div>
+                    </a>
+                    <p class="text-[var(--muted)] text-sm mb-6">نساعدك على تعلم الإنجليزية بشكل ممتع وفعال من خلال محتوى مجاني وعالي الجودة.</p>
+                    
+                    <!-- Social Links -->
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-xl bg-[var(--card)] border border-[var(--border)] flex items-center justify-center hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="YouTube">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-[var(--card)] border border-[var(--border)] flex items-center justify-center hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-[var(--card)] border border-[var(--border)] flex items-center justify-center hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Twitter">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-[var(--card)] border border-[var(--border)] flex items-center justify-center hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Telegram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6">روابط سريعة</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">الرئيسية</a></li>
+                        <li><a href="#articles" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">المقالات</a></li>
+                        <li><a href="#about" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">عن القناة</a></li>
+                        <li><a href="#contact" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6">الفئات</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">قواعد اللغة</a></li>
+                        <li><a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">المفردات</a></li>
+                        <li><a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">المحادثة</a></li>
+                        <li><a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">الاستماع</a></li>
+                        <li><a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">الكتابة</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6">تواصل معنا</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-[var(--muted)]">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            hello@enjoyenglish.com
+                        </li>
+                        <li class="flex items-center gap-3 text-[var(--muted)]">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            مصر
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-[var(--border)] flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-[var(--muted)] text-sm">© 2024 Enjoy Learning English. جميع الحقوق محفوظة.</p>
+                <div class="flex gap-6 text-sm">
+                    <a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">سياسة الخصوصية</a>
+                    <a href="#" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">شروط الاستخدام</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Article Data
+        const articles = [
+            {
+                id: 1,
+                title: 'دليلك الشامل لأزمنة الفعل في الإنجليزية',
+                excerpt: 'تعلم الفرق بين جميع الأزمنة الإنجليزية مع أمثلة عملية وتمارين تطبيقية',
+                category: 'grammar',
+                categoryName: 'قواعد',
+                image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=400&fit=crop',
+                date: '15 يناير 2024',
+                readTime: '8 دقائق',
+                featured: true
+            },
+            {
+                id: 2,
+                title: '100 كلمة إنجليزية يجب أن تعرفها في 2024',
+                excerpt: 'قائمة بأهم الكلمات المستخدمة يومياً مع النطق الصحيح والمعنى',
+                category: 'vocabulary',
+                categoryName: 'مفردات',
+                image: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=600&h=400&fit=crop',
+                date: '12 يناير 2024',
+                readTime: '12 دقيقة'
+            },
+            {
+                id: 3,
+                title: 'كيف تتغلب على الخوف من التحدث بالإنجليزية',
+                excerpt: 'نصائح عملية للتغلب على القلق وتحسين ثقتك بنفسك عند التحدث',
+                category: 'speaking',
+                categoryName: 'تحدث',
+                image: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=600&h=400&fit=crop',
+                date: '10 يناير 2024',
+                readTime: '6 دقائق'
+            },
+            {
+                id: 4,
+                title: 'أفضل تطبيقات الاستماع للإنجليزية للمبتدئين',
+                excerpt: 'مراجعة شاملة لأفضل التطبيقات والمواقع لتحسين مهارة الاستماع',
+                category: 'listening',
+                categoryName: 'استماع',
+                image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                date: '8 يناير 2024',
+                readTime: '7 دقائق'
+            },
+            {
+                id: 5,
+                title: 'كتابة البريد الإلكتروني الاحترافي بالإنجليزية',
+                excerpt: 'قوالب جاهزة ونصائح لكتابة إيميلات احترافية تخطف الانتباه',
+                category: 'writing',
+                categoryName: 'كتابة',
+                image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600&h=400&fit=crop',
+                date: '5 يناير 2024',
+                readTime: '10 دقائق'
+            },
+            {
+                id: 6,
+                title: 'Phrasal Verbs الأكثر شيوعاً مع أمثلة',
+                excerpt: 'تعلم أهم الأفعال المركبة وكيف تستخدمها في المحادثات اليومية',
+                category: 'grammar',
+                categoryName: 'قواعد',
+                image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop',
+                date: '3 يناير 2024',
+                readTime: '9 دقائق'
+            },
+            {
+                id: 7,
+                title: 'نصائح ذهبية لحفظ الكلمات الإنجليزية بسرعة',
+                excerpt: 'تقنيات علمية مثبتة لتسريع عملية الحفظ والتذكر طويل المدى',
+                category: 'tips',
+                categoryName: 'نصائح',
+                image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop',
+                date: '1 يناير 2024',
+                readTime: '5 دقائق'
+            },
+            {
+                id: 8,
+                title: 'الفرق بين British و American English',
+                excerpt: 'استكشف الاختلافات الرئيسية بين الإنجليزية البريطانية والأمريكية',
+                category: 'grammar',
+                categoryName: 'قواعد',
+                image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop',
+                date: '28 ديسمبر 2023',
+                readTime: '11 دقيقة'
+            },
+            {
+                id: 9,
+                title: 'كيف تحسن نطقك في 30 يوم فقط',
+                excerpt: 'خطة تدريب يومية لتحسين النطق واللهجة الإنجليزية',
+                category: 'speaking',
+                categoryName: 'تحدث',
+                image: 'https://images.unsplash.com/photo-1589311840293-0977a80a2f73?w=600&h=400&fit=crop',
+                date: '25 ديسمبر 2023',
+                readTime: '8 دقائق'
+            }
+        ];
+
+        // Tags Data
+        const tags = [
+            'IELTS', 'TOEFL', 'Business English', 'Travel English',
+            'Grammar Basics', 'Advanced Vocabulary', 'Pronunciation',
+            'Idioms', 'Slang Words', 'Academic Writing',
+            'Job Interview', 'Daily Conversations', 'English for Kids',
+            'Medical English', 'Technical English', 'Presentation Skills'
+        ];
+
+        // Initialize variables first
+        let currentCategory = 'all';
+        let displayedArticles = 6;
+
+        // DOM Elements
+        const articlesGrid = document.getElementById('articlesGrid');
+        const tagCloud = document.getElementById('tagCloud');
+        const searchInput = document.getElementById('searchInput');
+        const categoryPills = document.querySelectorAll('.category-pill');
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const progressBar = document.getElementById('progress');
+
+        // Render Articles
+        function renderArticles(filter = 'all', search = '') {
+            let filtered = articles;
+            
+            if (filter !== 'all') {
+                filtered = filtered.filter(a => a.category === filter);
+            }
+            
+            if (search) {
+                const searchLower = search.toLowerCase();
+                filtered = filtered.filter(a => 
+                    a.title.toLowerCase().includes(searchLower) || 
+                    a.excerpt.toLowerCase().includes(searchLower)
+                );
+            }
+
+            const toShow = filtered.slice(0, displayedArticles);
+
+            articlesGrid.innerHTML = toShow.map((article, index) => `
+                <article class="blog-card reveal delay-${(index % 5) + 1}" data-category="${article.category}">
+                    <div class="card-image">
+                        <img src="${article.image}" alt="${article.title}" loading="lazy">
+                        <div class="absolute top-4 right-4">
+                            <span class="category-badge category-${article.category}">
+                                ${getCategoryIcon(article.category)}
+                                ${article.categoryName}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-sm text-[var(--muted)] mb-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                ${article.date}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                ${article.readTime}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-3 hover:text-[var(--accent)] transition-colors cursor-pointer line-clamp-2">${article.title}</h3>
+                        <p class="text-[var(--muted)] text-sm mb-4 line-clamp-2">${article.excerpt}</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-[var(--accent)] font-semibold text-sm hover:gap-3 transition-all">
+                            اقرأ المزيد
+                            <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+
+            // Trigger reveal animations
+            setTimeout(() => {
+                document.querySelectorAll('.blog-card.reveal').forEach(el => el.classList.add('active'));
+            }, 100);
+
+            // Update load more button visibility
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (toShow.length >= filtered.length || filtered.length <= 6) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-flex';
+            }
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                grammar: '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>',
+                vocabulary: '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>',
+                speaking: '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>',
+                listening: '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>',
+                writing: '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>',
+                tips: '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>'
+            };
+            return icons[category] || icons.tips;
+        }
+
+        // Render Tags
+        function renderTags() {
+            tagCloud.innerHTML = tags.map(tag => `<a href="#">${tag}</a>`).join('');
+        }
+
+        // Category Filter
+        categoryPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                categoryPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentCategory = pill.dataset.category;
+                displayedArticles = 6;
+                renderArticles(currentCategory, searchInput.value);
+            });
+        });
+
+        // Search
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                renderArticles(currentCategory, e.target.value);
+            }, 300);
+        });
+
+        // Load More
+        document.getElementById('loadMoreBtn').addEventListener('click', () => {
+            displayedArticles += 3;
+            renderArticles(currentCategory, searchInput.value);
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+            menuOverlay.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMobileMenu);
+        menuOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu when clicking links
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('open')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        // Reading Progress Bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = Math.min((scrollTop / docHeight) * 100, 100);
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Scroll Reveal
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal:not(.blog-card)');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        // Subscribe Handler
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            alert(`شكراً لاشتراكك! سيتم إرسال التحديثات إلى: ${email}`);
+            e.target.reset();
+        }
+
+        // Event Listeners
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            revealOnScroll();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderArticles();
+            renderTags();
+            updateProgressBar();
+            revealOnScroll();
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
